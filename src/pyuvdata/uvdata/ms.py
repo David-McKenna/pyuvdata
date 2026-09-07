@@ -444,6 +444,10 @@ class MS(UVData):
         # set visibility units
         try:
             self.vis_units = tb_main.getcolkeywords(data_column)["QuantumUnits"]
+            # QuantisedUnits is a vector in the spec, pull the first item if the
+            # returned value is a 1-element list
+            if isinstance(self.vis_units, list) and len(self.vis_units) == 1:
+                self.vis_units = self.vis_units[0]
         except KeyError:
             self.vis_units = default_vis_units[data_column]
 
